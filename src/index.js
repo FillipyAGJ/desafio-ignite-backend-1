@@ -52,11 +52,31 @@ app.get('/todos', checksExistsUserAccount, (request, response) => {
 });
 
 app.post('/todos', checksExistsUserAccount, (request, response) => {
-  //  const {  } = request.body;
+  const { title, deadline } = request.body;
+
+  const { user } = request;
+
+  const todosList = {
+    id: uuidv4(),
+    title,
+    done: false,
+    deadline: new Date(deadline + " 00:00"),
+    created_at: new Date()
+  }
+
+  user.todos.push(todosList);
+
+  return response.status(201).send();
 });
 
 app.put('/todos/:id', checksExistsUserAccount, (request, response) => {
-  // Complete aqui
+  /*const { title, deadline } = request.body;
+  const { user } = request;
+
+  user.todos.title = title;
+  user.todos.deadline = deadline;
+
+  return response.status(201).send();*/
 });
 
 app.patch('/todos/:id/done', checksExistsUserAccount, (request, response) => {
